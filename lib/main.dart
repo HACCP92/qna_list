@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'presentation/qna_screen/qna_first_screen.dart';
+
+Future<Map<String, dynamic>> fetchData() async {
+  final response = await http.get(Uri.parse('주소 감춤'));
+  if (response.statusCode == 200) {
+    Map<String, dynamic> data = json.decode(response.body);
+    return data;
+  } else {
+    throw Exception('데이터를 불러올수없습니다.');
+  }
+}
 
 void main() => runApp(MaterialApp(
       title: 'Flutter Demo',
