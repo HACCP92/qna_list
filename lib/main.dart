@@ -4,12 +4,28 @@ import 'dart:convert';
 import 'presentation/qna_screen/qna_first_screen.dart';
 
 Future<Map<String, dynamic>> fetchData() async {
-  final response = await http.get(Uri.parse('주소 감춤'));
+  final response = await http.get(Uri.parse(''));
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     return data;
   } else {
-    throw Exception('데이터를 불러올수없습니다.');
+    throw Exception('데이터 error.');
+  }
+}
+
+class Get {
+  final String id;
+  final String question;
+  final String questionData;
+
+  Get({required this.id, required this.question, required this.questionData});
+
+  factory Get.fromJson(Map<String, dynamic> json) {
+    return Get(
+      id: json['id'],
+      question: json['question'],
+      questionData: json['quesetionData'],
+    );
   }
 }
 
@@ -20,6 +36,8 @@ void main() => runApp(MaterialApp(
       ),
       home: MyApp(),
     ));
+
+Map<String, dynamic> data = {};
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -49,11 +67,11 @@ class MyApp extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     color: Colors.blueAccent,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '제목',
+                          'id: ${data['id']}',
                           style: TextStyle(fontSize: 15),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -72,11 +90,11 @@ class MyApp extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     color: Colors.green,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '날짜',
+                          'questionData: ${data['questionData']}',
                           style: TextStyle(fontSize: 15),
                         ),
                       ],
@@ -93,12 +111,12 @@ class MyApp extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     color: Colors.yellow,
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '내용',
+                          'question: ${data['question']}',
                           style: TextStyle(fontSize: 15),
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
