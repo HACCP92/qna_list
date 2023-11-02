@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'presentation/qna_screen/qna_first_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
