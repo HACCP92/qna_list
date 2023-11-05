@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'presentation/qna_screen/qna_first_screen.dart';
 
 Future<Map<String, dynamic>> fetchData() async {
-  final response = await http.get(Uri.parse(''));
+  final response = await http
+      .get(Uri.parse('https://www.projectcafe.kr/api/api_qna_list_list'));
   if (response.statusCode == 200) {
     Map<String, dynamic> data = json.decode(response.body);
     return data;
@@ -18,29 +19,37 @@ class Get {
   final String question;
   final String questionData;
 
-  Get({required this.id, required this.question, required this.questionData});
+  Get({
+    required this.id,
+    required this.question,
+    required this.questionData,
+  });
 
   factory Get.fromJson(Map<String, dynamic> json) {
     return Get(
       id: json['id'],
       question: json['question'],
-      questionData: json['quesetionData'],
+      questionData: json['questionData'],
     );
   }
 }
 
-void main() => runApp(MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyApp(),
-    ));
+Future<void> main() async {
+  final data = await fetchData();
 
-Map<String, dynamic> data = {};
+  runApp(MaterialApp(
+    title: 'Flutter Demo',
+    theme: ThemeData(
+      primarySwatch: Colors.blue,
+    ),
+    home: MyApp(data: data),
+  ));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required Map<String, dynamic> data});
+
+  get data => null;
 
   // This widget is the root of your application.
   @override
