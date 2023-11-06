@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 Future<Map<String, dynamic>> fetchData() async {
   try {
     final response =
@@ -55,6 +57,7 @@ class MyApp extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = qnaList[index];
                 final user = item['user'];
+                final questionDate = DateTime.parse(item['questionDate']);
 
                 return InkWell(
                   onTap: () {},
@@ -89,10 +92,11 @@ class MyApp extends StatelessWidget {
                         width: double.infinity,
                         color: const Color(0xFFFFF9B0),
                         child: Text(
-                          '등록날짜: ${item['questionDate'] ?? ''}',
+                          '등록날짜: ${DateFormat('yyyy-MM-dd').format(questionDate)}', // DateTime을 형식화
                           style: const TextStyle(fontSize: 17),
                         ),
                       ),
+
                       const SizedBox(height: 2),
                     ],
                   ),
