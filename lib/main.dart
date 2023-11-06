@@ -19,11 +19,6 @@ Future<Map<String, dynamic>> fetchData() async {
   }
 }
 
-String filterSpecialCharacters(String input) {
-  String filteredString = input.replaceAll(RegExp(r'[^\w\s]'), '');
-  return filteredString;
-}
-
 Future<void> main() async {
   final data = await fetchData();
 
@@ -64,8 +59,6 @@ class MyApp extends StatelessWidget {
                 return InkWell(
                   onTap: () {},
                   child: Container(
-                    width: double.infinity,
-                    color: Colors.amberAccent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -75,20 +68,33 @@ class MyApp extends StatelessWidget {
                         //   maxLines: 1,
                         //   overflow: TextOverflow.ellipsis,
                         // ),
-                        Text(
-                          'username: ${user['username']}',
-                          style: TextStyle(fontSize: 15),
+                        Container(
+                          width: double.infinity,
+                          color: Colors.orangeAccent,
+                          child: Text(
+                            'username: ${user['username']}',
+                            style: TextStyle(fontSize: 15),
+                          ),
                         ),
-                        Text(
-                          'question: ${item['question']}',
-                          style: TextStyle(fontSize: 15),
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
+                        Container(
+                          width: double.infinity,
+                          color: Colors.greenAccent,
+                          child: Text(
+                            'question: ${item['question']}',
+                            style: TextStyle(fontSize: 15),
+                            maxLines: 4,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        Text(
-                          'questionData: ${item['questionData'] ?? ''}',
-                          style: TextStyle(fontSize: 15),
+                        Container(
+                          width: double.infinity,
+                          color: Colors.yellowAccent,
+                          child: Text(
+                            'questionData: ${item['questionData'] ?? ''}',
+                            style: TextStyle(fontSize: 15),
+                          ),
                         ),
+                        SizedBox(height: 2),
                       ],
                     ),
                   ),
