@@ -18,6 +18,11 @@ Future<Map<String, dynamic>> fetchData() async {
   }
 }
 
+String filterSpecialCharacters(String input) {
+  String filteredString = input.replaceAll(RegExp(r'[^\w\s]'), '');
+  return filteredString;
+}
+
 Future<void> main() async {
   final data = await fetchData();
 
@@ -53,21 +58,25 @@ class MyApp extends StatelessWidget {
               itemCount: qnaList.length,
               itemBuilder: (context, index) {
                 final item = qnaList[index];
+                final user = item['user'];
+
                 return InkWell(
-                  onTap: () {
-                    // 화면 간 데이터 전달을 위한 코드 추가
-                  },
+                  onTap: () {},
                   child: Container(
                     width: double.infinity,
-                    color: Colors.blueAccent,
+                    color: Colors.amberAccent,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Text(
+                        //   'id: ${item['id']}',
+                        //   style: TextStyle(fontSize: 15),
+                        //   maxLines: 1,
+                        //   overflow: TextOverflow.ellipsis,
+                        // ),
                         Text(
-                          'id: ${item['id']}',
+                          'username: ${user['username']}',
                           style: TextStyle(fontSize: 15),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           'question: ${item['question']}',
@@ -76,10 +85,9 @@ class MyApp extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'questionData: ${item['questionData']}',
+                          'questionData: ${item['questionData'] ?? ''}',
                           style: TextStyle(fontSize: 15),
                         ),
-                        // 다른 데이터 표시 항목 추가
                       ],
                     ),
                   ),
