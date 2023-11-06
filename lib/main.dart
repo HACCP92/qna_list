@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           title: const Text('FAQ'),
         ),
         body: SafeArea(
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: ListView.builder(
               itemCount: qnaList.length,
@@ -58,45 +58,43 @@ class MyApp extends StatelessWidget {
 
                 return InkWell(
                   onTap: () {},
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Text(
-                        //   'id: ${item['id']}',
-                        //   style: TextStyle(fontSize: 15),
-                        //   maxLines: 1,
-                        //   overflow: TextOverflow.ellipsis,
-                        // ),
-                        Container(
-                          width: double.infinity,
-                          color: Colors.orangeAccent,
-                          child: Text(
-                            'username: ${user['username']}',
-                            style: TextStyle(fontSize: 15),
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   'id: ${item['id']}',
+                      //   style: TextStyle(fontSize: 15),
+                      //   maxLines: 1,
+                      //   overflow: TextOverflow.ellipsis,
+                      // ),
+                      Container(
+                        width: double.infinity,
+                        color: Colors.yellow,
+                        child: Text(
+                          '닉네임: ${user['username']}',
+                          style: const TextStyle(fontSize: 20),
                         ),
-                        Container(
-                          width: double.infinity,
-                          color: Colors.greenAccent,
-                          child: Text(
-                            'question: ${item['question']}',
-                            style: TextStyle(fontSize: 15),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        color: const Color(0xFFFFF9B0),
+                        child: Text(
+                          '질문내용: ${item['question']}',
+                          style: const TextStyle(fontSize: 17),
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Container(
-                          width: double.infinity,
-                          color: Colors.yellowAccent,
-                          child: Text(
-                            'questionData: ${item['questionData'] ?? ''}',
-                            style: TextStyle(fontSize: 15),
-                          ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        color: const Color(0xFFFFF9B0),
+                        child: Text(
+                          '등록날짜: ${item['questionDate'] ?? ''}',
+                          style: const TextStyle(fontSize: 17),
                         ),
-                        SizedBox(height: 2),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 2),
+                    ],
                   ),
                 );
               },
