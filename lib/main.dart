@@ -6,8 +6,9 @@ Future<Map<String, dynamic>> fetchData() async {
   try {
     final response =
         await http.get(Uri.parse('https://www.projectcafe.kr/api/qna-list/'));
+
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
+      Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
       return data;
     } else {
       throw Exception('서버 응답 오류: ${response.statusCode}');
