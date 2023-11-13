@@ -46,6 +46,7 @@ void main() async {
 }
 
 class QnaDataProvider with ChangeNotifier {
+  //QnaDataProvider 클래스는 ChangeNotifier를 상속하여 상태를 관리합니다.
   //ChangeNotifier은 Provider 패키지에서 상태를 관리하기 위해 사용돼고 상태 변경을 관찰하고 알리는것을 뜻함
   //데이터를 관리
   Map<String, dynamic> data; //데이터를 저장
@@ -68,11 +69,11 @@ class MyApp extends StatelessWidget {
 
     if (data == null) {
       //데이터가 아직 로드되지 않거나 null 경우를 확인하는 조건문
-      return const CircularProgressIndicator(); //만약에 데이터가 null이면 로딩중을 나타냄
+      return const CircularProgressIndicator(); //만약에 데이터가 null이면 로딩중을 나타냄(로딩상태처리)
     }
 
     final qnaList = (data['qnaList'] as List<dynamic>) ??
-        []; //List<Map<String, dynamic>>으로 변환
+        []; //'data['qnaList']가 null인 경우에는 대신 빈 리스트([])를 사용합니다.
 
     return MaterialApp(
       home: Scaffold(
@@ -84,11 +85,15 @@ class MyApp extends StatelessWidget {
           child: SizedBox(
             width: double.infinity,
             child: ListView.builder(
+              //FAQ 목록은 ListView.builder를 사용해서  동적으로 나타낸다.
               itemCount: qnaList.length,
               itemBuilder: (context, index) {
-                final item = qnaList[index] as Map<String, dynamic>;
-                final user = item['user'] as Map<String, dynamic>;
-                final questionDate = DateTime.parse(item['questionDate']);
+                final item =
+                    qnaList[index] as Map<String, dynamic>; //해당 값이 맵으로 알려준다
+                final user = item['user']
+                    as Map<String, dynamic>; //해당값이 사용자 정보를 담은 맵으로 알려준다
+                final questionDate = DateTime.parse(item[
+                    'questionDate']); //questionDate에 저장된 날짜 정보를 DateTime 형식으로 반환한다
 
                 return InkWell(
                   onTap: () {
