@@ -139,6 +139,32 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: '검색',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: '프로필',
+            ),
+          ],
+          currentIndex: 0, // 초기 탭 인덱스 설정
+          selectedItemColor: Colors.blue, // 선택된 탭 색상을 사용자 정의
+          onTap: (index) {
+            // 탭 선택을 처리하는 메소드
+            // 여기에서 Navigator 또는 다른 방법을 사용하여 탭 간에 이동할 수 있습니다.
+          },
+        ),
+      ),
+    );
+  }
+}
       ),
     );
   }
