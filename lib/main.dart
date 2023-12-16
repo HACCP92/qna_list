@@ -100,10 +100,25 @@ class _MyAppState extends State<MyApp> {
                           content: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('질문내용: ${item['question']}'),
                               Text(
                                 '등록날짜: ${DateFormat('yyyy-MM-dd').format(questionDate)}',
+                                style: TextStyle(fontSize: 16),
                               ),
+                              const SizedBox(height: 8),
+                              Container(
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                width: double.infinity,
+                                height: 450.0,
+                                child: Text(
+                                  '질문내용: ${item['question']}',
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
                             ],
                           ),
                           actions: [
@@ -112,6 +127,14 @@ class _MyAppState extends State<MyApp> {
                                 Navigator.of(context).pop();
                               },
                               child: const Text('닫기'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // 삭제 버튼이 눌렸을 때 동작할 함수 호출
+                                deleteQuestion(qnaData, item['id'].toString());
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('삭제'),
                             ),
                           ],
                         );
@@ -133,26 +156,17 @@ class _MyAppState extends State<MyApp> {
                           ),
                           const SizedBox(height: 8),
                           Text(
+                            '등록날짜: ${DateFormat('yyyy-MM-dd').format(questionDate)}',
+                            style: const TextStyle(fontSize: 17),
+                          ),
+                          Text(
                             '질문내용: ${item['question']}',
                             style: const TextStyle(fontSize: 17),
                             maxLines: 4,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            '등록날짜: ${DateFormat('yyyy-MM-dd').format(questionDate)}',
-                            style: const TextStyle(fontSize: 17),
-                          ),
                         ],
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('닫기'),
-                        ),
-                      ],
                     ),
                   ),
                 );
@@ -166,42 +180,57 @@ class _MyAppState extends State<MyApp> {
               context: context,
               builder: (BuildContext context) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AlertDialog(
-                    title: const Text('새로운 질문 추가'),
-                    content: Column(
-                      children: [
-                        TextField(
-                          controller: nicknameController,
-                          decoration: const InputDecoration(labelText: '닉네임'),
+                    padding: const EdgeInsets.all(8),
+                    child: AlertDialog(
+                      title: const Text('새로운 질문 추가'),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 24, horizontal: 16),
+                      content: Container(
+                        width: double.maxFinite,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: nicknameController,
+                                decoration: const InputDecoration(
+                                  labelText: '닉네임을 입력하세요',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              TextFormField(
+                                controller: questionController,
+                                maxLines: 10,
+                                textAlignVertical: TextAlignVertical.top,
+                                decoration: const InputDecoration(
+                                  labelText: '질문을 입력하세요',
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        TextField(
-                          controller: questionController,
-                          decoration: const InputDecoration(labelText: '질문 내용'),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('취소'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            submitNewQuestion(
+                              context.read<QnaDataProvider>(),
+                              nicknameController.text,
+                              questionController.text,
+                            );
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('저장'),
                         ),
                       ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('취소'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          submitNewQuestion(
-                            context.read<QnaDataProvider>(),
-                            nicknameController.text,
-                            questionController.text,
-                          );
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('저장'),
-                      ),
-                    ],
-                  ),
-                );
+                    ));
               },
             );
           },
